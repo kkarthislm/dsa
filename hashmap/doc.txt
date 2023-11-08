@@ -1,0 +1,18 @@
+hashtable/hashmap
+
+key<->value store
+
+cpp
+unordered_map,unordered_multimap -> table , unsorted(insert O(1))
+map, multimap -> map ,sorted, insert (O(1))
+
+// unordered_map<int,int> q;
+map<int,int> q;
+//1st way:
+q.insert(make_pair(3, 7));
+
+//2nd way:
+q[3]=7;
+
+//3rd way:
+q.emplace(3, 7);

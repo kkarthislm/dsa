@@ -1,0 +1,142 @@
+
+dfs using stack
+
+3 types
+pre-order  -> root, left, right
+in-order   -> left, root, right
+post-order -> left, right, root
+
+
+4 methods
+1. recursion
+2. iterative -> using 1 stack
+3. iterative -> using 2 stacks
+4. iterative -> using morris traversal (threaded tree)
+
+
+recurision: O(n) time, O(n) space
+if root is empty return []
+
+pre-order:
+add root->val into result
+call (root->left, result)
+call (root->right, result)
+
+in-order:
+call (root->left, result)
+add root->val into result
+call (root->right, result)
+
+post-order:
+call (root->left, result)
+call (root->right, result)
+add root->val into result
+
+return result
+
+
+iterative using 1 stack: O(n) time O(n) space
+create a empty stack,
+run untill root != nullptr || !stack.empty()
+
+pre-order:
+ until root != nullptr
+    add root->val into result
+    add root = root->left into stack
+
+    root = stack.pop()
+    if(root->right) root = root->right;
+ 
+
+in-order:
+until root != nullptr
+    add root = root->left into stack
+
+    root = stack.pop()
+    add root->val into result
+    if(root->right) root = root->right;
+
+post-order:
+need to maintain one pre pointer to avoid visiting visited node
+until root != nullptr
+    add root = root->left into stack
+
+    root = stack.top()
+    if(root->right == nullptr || pre == root->right){
+        add root->val into result
+        stack.pop();
+        pre = root;
+        make root == nullptr to avoid the visit of root->left again
+    }else{
+        root = root->right;
+    }
+
+
+return result
+
+
+iterative using threaded tree aka morris traversal: O(n) time O(1) space
+create a result var
+maintain a link pre = nullptr to keep track of nodes
+
+pre-order:
+until root != nullptr
+    if root->left == nullptr
+        add root->val into result
+        root = root-> right
+    else
+        pre = root->left
+        until pre->right != nullptr && root != pre->right
+         pre = pre->right
+        
+        if pre->right == nullptr create a link 
+            add root->val into result
+            pre->right = root
+            root = root->left
+        else remove the link
+            pre->right = nullptr
+            root = root->right
+    
+
+in-order:
+until root != nullptr
+    if root->left == nullptr
+        add root->val into result
+        root = root-> right
+    else
+        pre = root->left
+        until pre->right != nullptr && root != pre->right
+         pre = pre->right
+        
+        if pre->right == nullptr create a link 
+            pre->right = root
+            root = root->left
+        else remove the link
+            add root->val into result
+            pre->right = nullptr
+            root = root->right
+
+
+post-order:
+create a dummy and make whole root as left of dummy
+until root != nullptr
+    if root->left == nullptr
+        root = root-> right
+    else
+        pre = root->left
+        until pre->right != nullptr && root != pre->right
+        pre = pre->right
+        
+        if pre->right == nullptr create a link 
+            pre->right = root
+            root = root->left
+        else remove the link
+            pre->right = nullptr
+            reverse root , pre
+            add all the nodes between root to pre
+            reverse root , pre
+            root = root->right
+
+
+
+return result

@@ -1,0 +1,15 @@
+bfs using queue
+keep size counter to traverse level by level 
+
+https://leetcode.com/discuss/study-guide/937307/Iterative-or-Recursive-or-DFS-and-BFS-Tree-Traversal-or-In-Pre-Post-and-LevelOrder-or-Views
+
+1. level_order_travesal
+iterative
+recursive (not 100% bfs)
+
+2. zigzag traversal
+iterative
+recursive
+
+3. max depth
+4. min depth
